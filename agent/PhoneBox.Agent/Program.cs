@@ -121,7 +121,7 @@ app.MapPost("/api/controls/spotify/disconnect", async (SpotifyControl spotify, C
 app.MapGet("/api/controls/spotify/callback", async (string? state, string? code, SpotifyControl spotify, CancellationToken ct) =>
 {
     try { return state is not null && code is not null && await spotify.Complete(state, code, ct)
-        ? Results.Text("Spotify connected. Return to PhoneBox settings; this tab can be closed.", "text/plain")
+        ? Results.Text("Spotify connected. Return to EkballoDeck settings. This tab can be closed.", "text/plain")
         : Results.BadRequest("Spotify sign-in expired or was refused. Start again from desktop settings."); }
     catch { return Results.BadRequest("Spotify sign-in failed. Start again from desktop settings."); }
 });

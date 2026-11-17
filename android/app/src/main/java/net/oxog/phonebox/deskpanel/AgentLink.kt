@@ -298,7 +298,7 @@ class AgentLink(context: Context) {
     fun claim(link: PairLink): String? {
         val pinned = pinnedFactory(link.fingerprint)
         var problem = "Could not reach ${link.pc} at ${link.hosts.joinToString()}. The phone and the computer must be " +
-            "on the same network (or both on Tailscale), and the computer's firewall must allow PhoneBox."
+            "on the same network (or both on Tailscale), and the computer's firewall must allow the EkballoDeck desktop agent."
         for (host in link.hosts) {
             try {
                 val c = URL("https://$host:${link.port}/api/pair/claim").openConnection() as HttpsURLConnection

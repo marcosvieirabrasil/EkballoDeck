@@ -52,7 +52,7 @@ public sealed class Tray : IHostedService
         autostart.Click += (_, _) => { ToggleAutostart(); autostart.Checked = File.Exists(AppPaths.StartupShortcut); };
 
         var menu = new ContextMenuStrip();
-        menu.Items.Add(new ToolStripMenuItem($"PhoneBox {AppPaths.Version}") { Enabled = false });
+        menu.Items.Add(new ToolStripMenuItem($"EkballoDeck {AppPaths.Version}") { Enabled = false });
         menu.Items.Add(status);
         menu.Items.Add(new ToolStripSeparator());
         menu.Items.Add(new ToolStripMenuItem("Settings…", null, (_, _) => OpenUrl(SettingsUrl)) { Font = new Font(menu.Font, FontStyle.Bold) });
@@ -73,14 +73,14 @@ public sealed class Tray : IHostedService
         _icon = new NotifyIcon
         {
             Icon = iconStream is null ? SystemIcons.Application : new Icon(iconStream, 32, 32),
-            Text = "PhoneBox",
+            Text = "EkballoDeck",
             ContextMenuStrip = menu,
             Visible = true,
         };
         _icon.DoubleClick += (_, _) => OpenUrl(SettingsUrl);
         _adb.StateChanged += () =>
         {
-            try { host.BeginInvoke(() => _icon.Text = _adb.Connected ? "PhoneBox — phone connected" : "PhoneBox — waiting for phone"); } catch { }
+            try { host.BeginInvoke(() => _icon.Text = _adb.Connected ? "EkballoDeck — phone connected" : "EkballoDeck — waiting for phone"); } catch { }
         };
 
         Application.Run(_ctx);
@@ -109,12 +109,12 @@ public sealed class Tray : IHostedService
             dynamic lnk = shell.CreateShortcut(AppPaths.StartupShortcut);
             lnk.TargetPath = Environment.ProcessPath;
             lnk.WorkingDirectory = Path.GetDirectoryName(Environment.ProcessPath);
-            lnk.Description = "PhoneBox agent";
+            lnk.Description = "EkballoDeck agent";
             lnk.Save();
         }
         catch (Exception ex)
         {
-            MessageBox.Show("Could not change the startup shortcut: " + ex.Message, "PhoneBox", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            MessageBox.Show("Could not change the startup shortcut: " + ex.Message, "EkballoDeck", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
     }
 }
